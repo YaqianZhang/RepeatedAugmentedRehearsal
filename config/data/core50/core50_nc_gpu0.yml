@@ -1,0 +1,6 @@
+parameters:
+  data: core50
+  cl_type: nc
+  data_name: core50_nc
+  num_tasks: 9
+  GPU_ID: 0
