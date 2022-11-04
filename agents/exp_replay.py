@@ -28,58 +28,13 @@ class ExperienceReplay(ContinualLearner):
 
 
 
-        # if(self.params.use_test_buffer):
-        #     self.close_loop_cl = close_loop_cl(self,model,self.memory_manager)
-        #     self.mix_label_pair = None
-        #     self.low_acc_classes = None
-        #     self.col=None
-        #     self.row=None
-        #     self.RL_replay = RL_replay(params, self.close_loop_cl)
-        # else:
-        #     self.close_loop_cl = None
+
         self.replay_para={"mem_ratio":self.params.mem_ratio,
                           "incoming_ratio":self.params.incoming_ratio,
                           "mem_iter":self.params.mem_iters,
                           "randaug_M":self.params.randaug_M}
         self.test_loaders = None
 
-
-        # _CIFAR_MEAN, _CIFAR_STD = (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)
-        #
-        # self.transform_train = transforms.Compose([
-        #     # transforms.RandomCrop(32, padding=4),
-        #     # transforms.RandomHorizontalFlip(),
-        #     transforms.ToTensor(),
-        #     #transforms.Normalize(_CIFAR_MEAN, _CIFAR_STD),
-        # ])
-        # # transform_test = transforms.Compose([
-        # #     transforms.ToTensor(),
-        # #     transforms.Normalize(_CIFAR_MEAN, _CIFAR_STD),
-        # # ])
-        #
-        # self.transform_train.transforms.insert(0, RandAugment(self.params.randaug_N, self.params.randaug_M))
-        #
-        # self.scr_transform = nn.Sequential(
-        #     RandomResizedCrop(size=(input_size_match[self.params.data][1], input_size_match[self.params.data][2]),
-        #                       scale=(0.2, 1.)),
-        #     RandomHorizontalFlip(),
-        #     ColorJitter(0.4, 0.4, 0.4, 0.1, p=0.8),
-        #     RandomGrayscale(p=0.2)
-        #
-        # )
-    # def set_aug_para(self,N,M):
-    #     self.transform_train = transforms.Compose([
-    #         # transforms.RandomCrop(32, padding=4),
-    #         # transforms.RandomHorizontalFlip(),
-    #         transforms.ToTensor(),
-    #         # transforms.Normalize(_CIFAR_MEAN, _CIFAR_STD),
-    #     ])
-    #     # transform_test = transforms.Compose([
-    #     #     transforms.ToTensor(),
-    #     #     transforms.Normalize(_CIFAR_MEAN, _CIFAR_STD),
-    #     # ])
-    #
-    #     self.transform_train.transforms.insert(0, RandAugment(N,M))
 
     def _compute_acc(self, batch_x, batch_y,  mem_num=0):
 
@@ -114,32 +69,6 @@ class ExperienceReplay(ContinualLearner):
         STOP_FLAG = False
         if(replay_para == None):
             replay_para = self.replay_para
-
-
-        # if(self.params.test_mem_recycle):
-        #     recycle_test_x = recycle.store_tmp(img,cls_max)
-        # ## todo : cutmix
-        # do_cutmix = self.params.do_cutmix and np.random.rand(1) < self.params.cutmix_prob
-        # if do_cutmix:
-        #     # print(x.shape)
-        #     ce = torch.nn.CrossEntropyLoss(reduction='mean')
-        #
-        #     x, labels_a, labels_b, lam = cutmix_data(x=batch_x, y=batch_y, alpha=1.0,index="None")
-        #     #logits = self._compute_softmax_logits(x)
-        #     logits = self.model.forward(x)
-        #
-        #     loss = lam * ce(logits, labels_a) + (1 - lam) * ce(
-        #         logits, labels_b
-        #     )
-        #     avrg_acc = 0
-        #     train_stats = None
-        #
-        #
-        # else:
-
-
-
-
 
         logits = self.model.forward(batch_x)
         _, pred_label = torch.max(logits, 1)
@@ -298,13 +227,11 @@ class ExperienceReplay(ContinualLearner):
                 batch_x,batch_y = batch_data
                 batch_x = maybe_cuda(batch_x, self.cuda)
                 batch_y = maybe_cuda(batch_y, self.cuda)
-                #batch_x,batch_y = self.memory_manager.update_before_training(batch_x,batch_y)
                 self.set_memIter()
                 memiter=self.mem_iters
 
                 for j in range(self.mem_iters):
 
-                    #self.set_aug_para(N, int(j*30/self.mem_iters), incoming_M=int(j*30/self.mem_iters))
 
 
                     concat_batch_x,concat_batch_y,mem_num = self.concat_memory_batch(batch_x,batch_y)
@@ -327,8 +254,7 @@ class ExperienceReplay(ContinualLearner):
 
 
                 self.mem_iter_list.append(memiter)
-                # if(self.params.use_test_buffer):
-                #     self.close_loop_cl.compute_testmem_loss()
+
                 self.memory_manager.update_memory(batch_x, batch_y)
 
                 if i % 100 == 1 and self.verbose:
@@ -337,12 +263,7 @@ class ExperienceReplay(ContinualLearner):
                         'running train acc: {:.3f}'
                             .format(i, losses_batch.avg(), acc_batch.avg())
                     )
-                    # print(
-                    #     '==>>> it: {}, mem avg. loss: {:.6f}, '
-                    #     'running mem acc: {:.3f}'
-                    #         .format(i, losses_mem.avg(), acc_mem.avg())
-                    # )
-                    print("mem_iter", memiter,concat_batch_y.shape,self.memory_manager.buff_use,acc_main,acc_add)
+
         self.after_train()
         return test_acc_list
 

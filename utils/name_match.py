@@ -6,13 +6,13 @@ from continuum.dataset_scripts.CLRS import CLRS25
 from continuum.dataset_scripts.mini_imagenet import Mini_ImageNet
 from continuum.dataset_scripts.openloris import OpenLORIS
 from agents.exp_replay import ExperienceReplay
-from agents.unused.exp_replay_dyna_aug import ExperienceReplay_aug
-from agents.unused.exp_replay_dyna_ratio import ExperienceReplay_ratio
-from agents.unused.exp_replay_offline import ExperienceReplay_offline
-from agents.unused.exp_replay_cl import ExperienceReplay_cl
-from agents.unused.exp_replay_cl_bandits import ExperienceReplay_cl_bandits
-from agents.unused.exp_replay_cl_bandits_ts import ExperienceReplay_cl_bandits_ts
-from agents.unused.exp_replay_batchsize import ExperienceReplay_batchsize
+# from agents.unused.exp_replay_dyna_aug import ExperienceReplay_aug
+# from agents.unused.exp_replay_dyna_ratio import ExperienceReplay_ratio
+# from agents.unused.exp_replay_offline import ExperienceReplay_offline
+# from agents.unused.exp_replay_cl import ExperienceReplay_cl
+# from agents.unused.exp_replay_cl_bandits import ExperienceReplay_cl_bandits
+# from agents.unused.exp_replay_cl_bandits_ts import ExperienceReplay_cl_bandits_ts
+# from agents.unused.exp_replay_batchsize import ExperienceReplay_batchsize
 #from unused.rl_exp_replay import RL_ExperienceReplay
 from agents.agem import AGEM
 from agents.ewc_pp import EWC_pp
@@ -57,13 +57,13 @@ data_objects = {
 }
 agents = {
     'ER': ExperienceReplay,
-    'ER_cl': ExperienceReplay_cl,
-    "ER_cl_bandits":ExperienceReplay_cl_bandits,
-    "ER_cl_bandits_ts":ExperienceReplay_cl_bandits_ts,
-    "ER_batchsize":ExperienceReplay_batchsize,
-    'ER_aug': ExperienceReplay_aug,
-    "ER_ratio":ExperienceReplay_ratio,
-    "ER_offline":ExperienceReplay_offline,
+    # 'ER_cl': ExperienceReplay_cl,
+    # "ER_cl_bandits":ExperienceReplay_cl_bandits,
+    # "ER_cl_bandits_ts":ExperienceReplay_cl_bandits_ts,
+    # "ER_batchsize":ExperienceReplay_batchsize,
+    # 'ER_aug': ExperienceReplay_aug,
+    # "ER_ratio":ExperienceReplay_ratio,
+    # "ER_offline":ExperienceReplay_offline,
   #  "ER_RL_ratio":ER_RL_ratio,
 #"ER_RL_iter":ER_RL_iter,
 # "ER_RL_addIter":ER_RL_addIter,

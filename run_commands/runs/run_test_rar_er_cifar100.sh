@@ -19,15 +19,15 @@ do
 
 
 #
-   ########### with RAR
-  MEM_ITER=1
-  RAUG_N=1
-  RAUG_M=14
-  RAUG_TARGET="both"  ## mem incoming none
-  MEM_BATCH=10
-  FILE_NAME=$NAME_PREFIX$ALGO_NAME"_raug.sh"
-  source $FILE_NAME $GPU_ID $NUM_TASKS $DATASET_NAME $SEED $MEM_SIZE $MEM_ITER \
-  $RAUG_N $RAUG_M $RAUG_TARGET $MEM_BATCH $RES_SIZE
+#   ########### with RAR
+#  MEM_ITER=1
+#  RAUG_N=1
+#  RAUG_M=14
+#  RAUG_TARGET="both"  ## mem incoming none
+#  MEM_BATCH=10
+#  FILE_NAME=$NAME_PREFIX$ALGO_NAME"_raug.sh"
+#  source $FILE_NAME $GPU_ID $NUM_TASKS $DATASET_NAME $SEED $MEM_SIZE $MEM_ITER \
+#  $RAUG_N $RAUG_M $RAUG_TARGET $MEM_BATCH $RES_SIZE
 #
 
 

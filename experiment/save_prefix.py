@@ -345,6 +345,8 @@ def get_prefix(params,run):
             os.mkdir("results/" + params.new_folder)
     else:
         folder_path = "results/" + str(params.seed)
+    if (not os.path.exists("results")):
+        os.mkdir("results")
     if (not os.path.exists(folder_path)):
         os.mkdir(folder_path)
     prefix = folder_path + '/' + params.agent +str(params.epoch)+ "_" + params.retrieve[:3] + "_" + params.update[:3] + '_' + trick  + str(
