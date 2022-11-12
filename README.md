@@ -26,15 +26,27 @@ pip install -r requirements.txt
 ```
 
 ## Run commands
+### Repeated Augmented Replay
 
 ### bash runs
-A test run can be performed with the following command:
+A test run of ER_RAR can be performed with the following command:
 ```
 bash run_commands/runs/run_test_rar_er_cifar100.sh
 ```
 Other experiment commands can be found in the folder of [run_commands/runs](run_commands/runs).
 
 Detailed descriptions of options can be found in [general_main.py](general_main.py) and [utils/argparser](utils/argparser)
+
+For example: 
+
+The number of repeated iteration is set via:
+```
+--mem_iters $MEM_ITER
+```
+The number of augmentation strength is set via:
+```
+--randaug True --randaug_N $RAUG_N  --randaug_M $RAUG_M
+```
 
 ## Evaluation the results
 The results of algorithm outputs will be stored in the folder of [results](results/).
@@ -49,13 +61,14 @@ The jupyter notebook [visualize_results.ipynb](visualize_results.ipynb) is used 
 
 ### Baselines
 
-* ASER: Adversarial Shapley Value Experience Replay(**AAAI, 2021**) [[Paper]](https://arxiv.org/abs/2009.00093)
-* EWC++: Efficient and online version of Elastic Weight Consolidation(EWC) (**ECCV, 2018**) [[Paper]](http://arxiv-export-lb.library.cornell.edu/abs/1801.10112)
+
 * LwF: Learning without forgetting (**ECCV, 2016**) [[Paper]](https://link.springer.com/chapter/10.1007/978-3-319-46493-0_37)
 * AGEM: Averaged Gradient Episodic Memory (**ICLR, 2019**) [[Paper]](https://openreview.net/forum?id=Hkf2_sC5FX)
 * ER: Experience Replay (**ICML Workshop, 2019**) [[Paper]](https://arxiv.org/abs/1902.10486)
+* ASER: Adversarial Shapley Value Experience Replay(**AAAI, 2021**) [[Paper]](https://arxiv.org/abs/2009.00093)
 * MIR: Maximally Interfered Retrieval (**NeurIPS, 2019**) [[Paper]](https://proceedings.neurips.cc/paper/2019/hash/15825aee15eb335cc13f9b559f166ee8-Abstract.html)
-* SCR: Supervised Contrastive Replay (**CVPR Workshop, 2021**) [[Paper]](https://arxiv.org/abs/2103.13885) 
+* SCR: Supervised Contrastive Replay (**CVPR Workshop, 2021**) [[Paper]](https://arxiv.org/abs/2103.13885)
+* DER: Dark Experience Replay (** NeurIPS, 2020**) [[Paper]](https://proceedings.neurips.cc/paper/2020/file/b704ea2c39778f07c617f6b7ce480e9e-Paper.pdf)
 
 
 ## Datasets
@@ -65,7 +78,7 @@ The jupyter notebook [visualize_results.ipynb](visualize_results.ipynb) is used 
 - Split CIFAR100
 - Split Mini-ImageNet
 - CORe50-NC
-- CLRS (Continual Learning Benchmark for Remote
+- CLRS-NC (Continual Learning Benchmark for Remote
   Sensing Image Scene Classification)
 ### Data preparation
 - CIFAR100 will be downloaded during the first run
@@ -79,4 +92,6 @@ The jupyter notebook [visualize_results.ipynb](visualize_results.ipynb) is used 
 - [SCR/ASER](https://github.com/RaptorMai/online-continual-learning)
 - [MIR](https://github.com/optimass/Maximally_Interfered_Retrieval)
 - [AGEM](https://github.com/facebookresearch/agem)
+- [DER](https://github.com/aimagelab/mammoth)
+- [Rehearsal Revealed](https://github.com/Mattdl/RehearsalRevealed)
 

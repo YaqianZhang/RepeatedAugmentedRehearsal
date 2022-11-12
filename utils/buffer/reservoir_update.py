@@ -21,11 +21,13 @@ class Reservoir_update(object):
         idx_buffer = torch.argsort(buffer.buffer_last_replay,descending=True)[:store_sample_num]
         return idx_buffer
 
-    def update(self, buffer, x, y,tmp_buffer=None, **kwargs):
+    def update(self, buffer, x, y,logits=None,tmp_buffer=None, **kwargs):
         batch_size = x.size(0)
         x = x.cpu()
         y = y.cpu()
 
+        if hasattr(buffer, 'buffer_logits'):
+            logits = logits.cpu()
 
         # add whatever still fits in the buffer
         place_left = max(0, buffer.buffer_img.size(0) - buffer.current_index)
@@ -34,6 +36,8 @@ class Reservoir_update(object):
             buffer.buffer_img[buffer.current_index: buffer.current_index + offset].data.copy_(x[:offset])
             buffer.buffer_label[buffer.current_index: buffer.current_index + offset].data.copy_(y[:offset])
             buffer.buffer_new_old[buffer.current_index: buffer.current_index + offset]=1
+            if hasattr(buffer,'buffer_logits'):
+                buffer.buffer_logits[buffer.current_index: buffer.current_index + offset].data.copy_(logits[:offset])
 
             buffer.current_index += offset
             buffer.n_seen_so_far += offset
@@ -50,6 +54,8 @@ class Reservoir_update(object):
 
         # remove what is already in the buffer
         x, y = x[place_left:], y[place_left:]
+        if hasattr(buffer, 'buffer_logits'):
+            logits = logits[place_left:]
 
         indices = torch.FloatTensor(x.size(0)).to(x.device).uniform_(0, buffer.n_seen_so_far).long()
         valid_indices = (indices < buffer.buffer_img.size(0)).long()
@@ -72,6 +78,8 @@ class Reservoir_update(object):
 
         assert idx_buffer.max() < buffer.buffer_img.size(0)
         assert idx_buffer.max() < buffer.buffer_label.size(0)
+        if hasattr(buffer, 'buffer_logits'):
+            assert idx_buffer.max() < buffer.buffer_logits.size(0)
         # assert idx_buffer.max() < self.buffer_task.size(0)
 
         assert idx_new_data.max() < x.size(0)
@@ -97,8 +105,10 @@ class Reservoir_update(object):
         #     tmp_buffer.tmp_store(x[idx_new_data], y[idx_new_data])
         #
         # else:
-
-        buffer.overwrite(idx_map, x, y)
+        if hasattr(buffer, 'buffer_logits'):
+            buffer.overwrite(idx_map,x,y,logits)
+        else:
+            buffer.overwrite(idx_map, x, y)
 
         return list(idx_map.keys())
 

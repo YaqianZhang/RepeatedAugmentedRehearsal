@@ -135,9 +135,20 @@ def RL_name(params,trick):
             if(params.reward_test_type != "None"):
                 trick += params.reward_test_type + "_"
     return trick
+def DER_name(params,trick):
+    if(params.agent[:3] == "DER"):
+        if(params.DER_alpha != 0.3):
+            trick += "a"+str(params.DER_alpha)+"_"
+    if(params.agent in ["DER_head","DER_head_t1","DERPP_head_t1","DERPP_head"]):
+        if(params.phead_layer != 1 or params.phead_size != 1024):
+            trick += "phead"+str(params.phead_layer)+"x"+str(params.phead_size)+"_"
+    return trick
+
 def SCR_name(params,trick):
 
     if(params.agent[:3]=="SCR"):
+        if(params.self_sup_beta > 0 ):
+            trick += "beta"+str(params.self_sup_beta)+"_"
         trick+= "temp"+str(params.temp)+"_"
         if (params.softmax_type != 'None'):
             trick += "softmax"+str(params.softmax_nsize) \
@@ -158,22 +169,22 @@ def aug_name(params,trick):
 
 
     if (params.aug_start > 0):
-        trick += str(params.aug_start) + "_"
+        trick += "q"+str(params.aug_start) + "_"
 
-    if (params.randaug_type == "dynamic"):
-        trick += "raug_dyna_"
-    else:
-        if (params.randaug):
-            trick += "raug"
-            # if(params.randaug_N_mem != 0):
-            #     trick += str(params.randaug_N_mem)
-            # if(params.randaug_N_incoming != 0):
-            #     trick += str(params.randaug_N_incoming)+"-"
-
-            trick +=  str(params.randaug_N) + str(params.randaug_M) + "_"
-            if (params.aug_target != "both"):
-                trick += params.aug_target + "_"
-
+    # if (params.randaug_type == "dynamic"):
+    #     trick += "raug_dyna_"
+    # else:
+    if ( params.agent in [ "ER_compress","ER_compress_both"]):
+        trick += str(params.quality) + "_"
+    if (params.randaug):
+        trick += "raug"
+        trick +=  str(params.randaug_N) + str(params.randaug_M) + "_"
+        if (params.aug_target != "both"):
+            trick += params.aug_target + "_"
+    if(params.aug_normal):
+        trick += "nml_"
+    if(params.deraug):
+        trick += "deraug_"
     if (params.scraug):
         trick += "scraug_"
         if (params.aug_target != "both"):
@@ -239,6 +250,7 @@ def get_prefix(params,run):
 
     ### scr relateed: temp, softmax ####
     trick = SCR_name(params,trick)
+    trick = DER_name(params,trick)
 
     if(params.drift_detection):
         trick += "drf_"
@@ -250,8 +262,8 @@ def get_prefix(params,run):
     #         trick +=params.cutmix_type +"_"
 
 
-    # if (params.no_aug):
-    #     trick += "noaug_"
+    if (params.no_aug):
+        trick += "noaug_"
     # if(params.aug_type != ""):
     #     trick += params.aug_type
     # if (params.single_aug):
@@ -286,10 +298,13 @@ def get_prefix(params,run):
 
 
 
-    # if (params.incoming_ratio != 1):
-    #     trick += "iratio" + str(params.incoming_ratio)+"_"
-    # if (params.mem_ratio != 1):
-    #     trick += "mratio" + str(params.mem_ratio)+"_"
+    if(params.agent[:8] == "ER_ratio"):
+        pass
+    else:
+        if (params.incoming_ratio != 1):
+            trick += "iratio" + str(params.incoming_ratio)+"_"
+    if (params.mem_ratio != 1):
+        trick += "mratio" + str(params.mem_ratio)+"_"
     # if(params.dyna_ratio != "None"):
     #     trick +="dyRatio"+params.dyna_ratio+"_"
     #

@@ -24,7 +24,7 @@ def parse_cl_basic(parser):
 
     ########################Agent#########################
     parser.add_argument('--agent', dest='agent', default='ER',
-                        choices=["ER_offline", 'LAMAML', 'RLER', 'ER',"ER_cl_bandits","ER_cl_bandits_ts", "ER_batchsize","ER_ratio","ER_aug", "ER_cl", "ER_RL_ratio",
+                        choices=["DER","ER_offline", 'LAMAML', 'RLER', 'ER',"ER_cl_bandits","ER_cl_bandits_ts", "ER_batchsize","ER_ratio","ER_aug", "ER_cl", "ER_RL_ratio",
                                  "ER_RL_addIter", "ER_RL_addIter_stop_new", "ER_RL_addIter_stop", "ER_dyna_iter","ER_dyna_iter_aug","ER_dyna_iter_aug_only","ER_dyna_iter_aug_dbpg","ER_dyna_iter_aug_dbpg_joint",
                                 "ER_dyna_rnd", "ER_RL_iter", 'EWC', 'AGEM', 'CNDPM', 'LWF', 'ICARL', 'GDUMB',
                                  'ASER', 'SCR', 'SCR_META',

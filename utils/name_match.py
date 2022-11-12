@@ -3,6 +3,7 @@ from continuum.dataset_scripts.cifar100 import CIFAR100
 from continuum.dataset_scripts.cifar10 import CIFAR10
 from continuum.dataset_scripts.core50 import CORE50
 from continuum.dataset_scripts.CLRS import CLRS25
+from continuum.dataset_scripts.imagenet import IMAGENET1000
 from continuum.dataset_scripts.mini_imagenet import Mini_ImageNet
 from continuum.dataset_scripts.openloris import OpenLORIS
 from agents.exp_replay import ExperienceReplay
@@ -44,10 +45,11 @@ from agents.ER_dyna_iter_aug import ER_dyna_iter_aug
 from agents.ER_dyna_iter_aug_dbpg_joint import ER_dyna_iter_aug_dbpg_joint
 from utils.buffer.sc_retrieve import Match_retrieve
 from utils.buffer.mem_match import MemMatch_retrieve
-
+from agents.DER import DER
 
 
 data_objects = {
+    'imagenet1000':IMAGENET1000,
     'cifar100': CIFAR100,
     'cifar10': CIFAR10,
     'core50': CORE50,
@@ -56,6 +58,7 @@ data_objects = {
     'clrs25':CLRS25
 }
 agents = {
+    "DER":DER,
     'ER': ExperienceReplay,
     # 'ER_cl': ExperienceReplay_cl,
     # "ER_cl_bandits":ExperienceReplay_cl_bandits,

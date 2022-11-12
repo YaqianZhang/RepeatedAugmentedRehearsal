@@ -1,8 +1,10 @@
 from utils.buffer.buffer import Buffer
+from utils.buffer.buffer_logits import Buffer_logits
 from utils.buffer.tmp_buffer import Tmp_Buffer
 from utils.buffer.test_buffer import Test_Buffer
 import torch
 import numpy as np
+##"test"
 
 class memory_manager_class(object):
     def __init__(self,model,params):
@@ -11,7 +13,10 @@ class memory_manager_class(object):
         self.buff_use = "single buff"
 
         ## main buffer
-        self.buffer = Buffer(model, params)
+        if(self.params.agent[:3] == "DER" or self.params.agent == "SCR_der"):
+            self.buffer = Buffer_logits(model, params)
+        else:
+            self.buffer = Buffer(model,params)
         self.current_performance = []
 
         # ## additional buffer
@@ -59,7 +64,7 @@ class memory_manager_class(object):
 
     def retrieve_from_mem(self,batch_x, batch_y,task_seen,retrieve_num=None):
 
-        mem_x, mem_y = self.buffer.retrieve(x=batch_x, y=batch_y,retrieve_num=retrieve_num)
+        stats = self.buffer.retrieve(x=batch_x, y=batch_y,retrieve_num=retrieve_num)
         # if (self.params.switch_buffer_type == "one_buffer"):
         #     mem_x, mem_y = self.buffer.retrieve(x=batch_x, y=batch_y)
         # elif (self.params.switch_buffer_type == "two_buffer"):
@@ -91,7 +96,7 @@ class memory_manager_class(object):
         #
         # else:
         #     raise NotImplementedError("Undefined buffer switch strategy", self.params.switch_buffer_type)
-        return mem_x, mem_y
+        return stats[0],stats[1]
 
 
     # def update_before_training(self, batch_x, batch_y):
@@ -108,6 +113,12 @@ class memory_manager_class(object):
     #     return batch_x[test_size:], batch_y[test_size:]
     # def reset_new_old(self):
     #     self.buffer.buffer_new_old = torch.LongTensor(self.buffer.buffer_size).fill_(0)
+    def update_memory_logits(self,batch_x,batch_y, logits):
+        self.buffer.update(batch_x,batch_y,logits)
+
+    def retrieve_from_mem_logits(self,batch_x,batch_y,retrieve_num):
+        mem_x, mem_y,logits = self.buffer.retrieve(x=batch_x, y=batch_y,retrieve_num=retrieve_num)
+        return mem_x,mem_y,logits
 
     def update_memory(self, batch_x, batch_y):
 

@@ -15,7 +15,12 @@ class Random_retrieve(object):
     def retrieve(self, buffer,retrieve_num=None, **kwargs):
         if(retrieve_num == None):
             retrieve_num = self.num_retrieve
+        if hasattr(buffer, "buffer_logits"):
 
-        x,y,indices = random_retrieve(buffer, retrieve_num,return_indices=True)
-        buffer.update_replay_times(indices)
-        return x,y
+            x,y,logits,indices = random_retrieve(buffer, retrieve_num,return_indices=True)
+            buffer.update_replay_times(indices)
+            return x,y,logits
+        else:
+            x,y,indices = random_retrieve(buffer, retrieve_num,return_indices=True)
+            buffer.update_replay_times(indices)
+            return x,y

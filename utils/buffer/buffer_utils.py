@@ -30,13 +30,22 @@ def random_retrieve(buffer, num_retrieve, excl_indices=None, return_indices=Fals
     y = maybe_cuda(y)
 
 
+    if( hasattr(buffer,"buffer_logits")):
+        logits = buffer.buffer_logits[indices]
+        logits = maybe_cuda(logits)
+        if return_indices:
 
-
-    if return_indices:
-
-        return x, y, indices
+            return x, y, logits,indices
+        else:
+            return x, y, logits,
     else:
-        return x, y
+
+
+        if return_indices:
+
+            return x, y, indices
+        else:
+            return x, y
 
 def match_retrieve(buffer, cur_y, exclud_idx=None):
 

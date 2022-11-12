@@ -8,6 +8,7 @@ import warnings
 from utils.argparser.argparser_RL import parse_RL_para
 from utils.argparser.argparser_basic import parse_cl_basic
 from utils.argparser.argparser_scr import parse_scr
+from utils.argparser.argparser_der import parse_der
 from utils.argparser.argparser_aug import parse_aug
 from utils.argparser.argparser_replay import parse_replay
 
@@ -42,6 +43,7 @@ if __name__ == "__main__":
 
     parser = parse_cl_basic(parser)
     parser = parse_scr(parser)
+    parser = parse_der(parser)
 
     parser = parse_RL_para(parser)
     parser = parse_aug(parser)
@@ -107,45 +109,3 @@ if __name__ == "__main__":
         raise NotImplementedError("not seen dataset",args.data)
 
     main(args)
-# ######### meta learn lamaml related
-#     parser.add_argument('--learn_lr',type=boolean_string,default = False,help="whether to learn softmax head lr")
-#     parser.add_argument('--second_order',type=boolean_string,default= False)
-#     parser.add_argument('--grad_clip_norm', type=float, default=2.0,
-#                         help='Clip the gradients by this value')
-#     parser.add_argument('--sync_update', default=False, action='store_true',
-#                         help='the LRs and weights should be updated synchronously')
-#     parser.add_argument('--xav_init', default=False, action='store_true',
-#                         help='Use xavier initialization')
-#     parser.add_argument('--opt_lr', type=float, default=1e-1,
-#                         help='learning rate for LRs')
-#     parser.add_argument('--opt_wt', type=float, default=1e-1,
-#                         help='learning rate for weights')
-#     parser.add_argument('--alpha_init', type=float, default=1e-3,
-#                         help='initialization for the LRs')
-
-
-# ################### LAMAML
-# parser.add_argument('--alpha_init', type=float, default=1e-3,
-#                     help='initialization for the LRs')
-# #################################### multiple buffer idea ####################################
-#
-# parser.add_argument('--test_retrieval_step', dest='test_retrieval_step', default= -1,
-#                     type=int,
-#                     help="")
-#
-#
-#
-# parser.add_argument('--switch_buffer_freq', dest='switch_buffer_freq', default= 1000,
-#                     type=int,
-#                     help="")
-#
-# parser.add_argument("--only_task_seen",dest="only_task_seen",default=False,type=boolean_string)
-
-# parser.add_argument("--replay_old_only",dest="replay_old_only",default=False,type=boolean_string,)
-#
-# parser.add_argument("--split_new_old",dest="split_new_old",default=False,type=boolean_string)
-
-# parser.add_argument('--mem_iter_std', dest='mem_iter_std', default=0.3, type=int,
-#                     help='')
-#
-#

@@ -151,24 +151,6 @@ class ContinualLearner(torch.nn.Module, metaclass=abc.ABCMeta):
         labels = labels.clone()
         ce = torch.nn.CrossEntropyLoss(reduction=reduction_type)
 
-        ## classes seen
-        # if(self.params.only_task_seen):
-        #     labels_seen = self.old_labels + self.new_labels
-        #     ss = F.log_softmax(logits[:, labels_seen], dim=1)
-        #
-        #     changed_labels=labels
-        #     for i, lbl in enumerate(labels):
-        #         changed_labels[i] = self.lbl_inv_map[lbl.item()]
-        #
-        #     opt2= F.nll_loss(ss, changed_labels)
-        #     #opt1 = ce(logits, labels)
-        #     #print(opt1,opt2)
-        #     #assert False
-        #     return opt2
-
-
-
-
         if self.params.trick['labels_trick']:
             unq_lbls = labels.unique().sort()[0]
             for lbl_idx, lbl in enumerate(unq_lbls):
@@ -199,20 +181,7 @@ class ContinualLearner(torch.nn.Module, metaclass=abc.ABCMeta):
     def forward_with_weight(self, x,weight):
         return self.model.forward_with_weight(x,weight)
 
-    # def perform_cutmix(self, x, y):
-    #     ce = torch.nn.CrossEntropyLoss(reduction='mean')
-    #
-    #     do_cutmix = self.params.do_cutmix and np.random.rand(1) < 0.5
-    #     if do_cutmix:
-    #         # print(x.shape)
-    #
-    #         x, labels_a, labels_b, lam = cutmix_data(x=x, y=y, alpha=1.0, index=index)
-    #
-    #         logits = self.model.forward(x)
-    #         softmax_loss = lam * ce(logits, labels_a) + (1 - lam) * ce(
-    #             logits, labels_b
-    #         )
-    #     return softmax_loss
+
 
     def set_memIter(self):
         #print(self.task_seen,self.params.aug_start)
@@ -233,43 +202,30 @@ class ContinualLearner(torch.nn.Module, metaclass=abc.ABCMeta):
             else:
                 self.memory_manager.buffer.retrieve_method.num_retrieve = 10
 
-        # if self.task_seen == 0 and self.params.start_mem_iters>-1:
-        #     self.mem_iters = self.params.start_mem_iters
-        # else:
-        #     self.mem_iters = self.params.mem_iters
+
     def concat_memory_batch(self, batch_x,batch_y,retrieve_num=None):
         mem_x, mem_y = self.memory_manager.retrieve_from_mem(batch_x, batch_y, self.task_seen,retrieve_num=retrieve_num)
-        # if (self.params.close_loop_mem_type == "low_acc" and self.low_acc_classes != None):
-        #     add_mem_x, add_mem_y = self.memory_manager.buffer.retrieve_class_num(self.low_acc_classes, self.eps_mem_batch)
-        #     mem_x = torch.cat([mem_x, add_mem_x, ])
-        #     mem_y = torch.cat([mem_y, add_mem_y, ])
-        #
-
-
         if mem_x.size(0) > 0:
             mem_x = maybe_cuda(mem_x, self.cuda)
             mem_y = maybe_cuda(mem_y, self.cuda)
 
             batch_x = torch.cat([mem_x,batch_x,])
             batch_y = torch.cat([mem_y,batch_y,])
-        # if (self.params.acc_no_aug):
-        #     self._compute_acc(batch_x,batch_y,mem_x.size(0))
+        return self.perform_augmentation(batch_x,batch_y,mem_x.size(0))
+    def perform_augmentation(self,batch_x,batch_y,mem_batch_size):
+
         if(self.task_seen >= self.params.aug_start):
             if (self.params.randaug):
-            # print(concat_batch_x[0])
 
-                # batch_x_aug1 = self.aug_agent.aug_data(batch_x,mem_x.size(0),)
-                # end1=time.time()
 
-                batch_x_aug2 = self.aug_agent.aug_data_old(batch_x, mem_x.size(0), )
-                # end2=time.time()
-                # print(end1-start,end2-end1)
+                batch_x_aug2 = self.aug_agent.aug_data_old(batch_x, mem_batch_size, )
+
                 batch_x = batch_x_aug2
 
             if (self.params.scraug):
-                batch_x = self.aug_agent.scr_aug_data(batch_x,mem_x.size(0))
+                batch_x = self.aug_agent.scr_aug_data(batch_x,mem_batch_size)
 
-        return batch_x,batch_y,mem_x.size(0)
+        return batch_x,batch_y,mem_batch_size
     def _compute_softmax_logits(self,x,need_grad = True):
 
         if(need_grad):
