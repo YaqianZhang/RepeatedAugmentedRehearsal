@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ```
 
 ## Run commands
-### Repeated Augmented Replay
+### Repeated Augmented Rehearsal
 
 ### bash runs
 A test run of ER_RAR can be performed with the following command:
@@ -68,7 +68,7 @@ The jupyter notebook [visualize_results.ipynb](visualize_results.ipynb) is used 
 * ASER: Adversarial Shapley Value Experience Replay(**AAAI, 2021**) [[Paper]](https://arxiv.org/abs/2009.00093)
 * MIR: Maximally Interfered Retrieval (**NeurIPS, 2019**) [[Paper]](https://proceedings.neurips.cc/paper/2019/hash/15825aee15eb335cc13f9b559f166ee8-Abstract.html)
 * SCR: Supervised Contrastive Replay (**CVPR Workshop, 2021**) [[Paper]](https://arxiv.org/abs/2103.13885)
-* DER: Dark Experience Replay (** NeurIPS, 2020**) [[Paper]](https://proceedings.neurips.cc/paper/2020/file/b704ea2c39778f07c617f6b7ce480e9e-Paper.pdf)
+* DER: Dark Experience Replay (**NeurIPS, 2020**) [[Paper]](https://proceedings.neurips.cc/paper/2020/file/b704ea2c39778f07c617f6b7ce480e9e-Paper.pdf)
 
 
 ## Datasets
