@@ -2,15 +2,15 @@
 MEM_SIZE=2000
 
 NUM_TASKS=0
-GPU_ID=1
-NAME_PREFIX="run_commands/base_command_"
+GPU_ID=0
+NAME_PREFIX="run_commands/base_commands/command_"
 
 
-for SEED in 1259051 1259052 1259053
+for SEED in 1259051 #1259052 1259053
 do
   ALGO_NAME="er" ## er, scr, aser
 
-for DATASET_NAME in      "cifar100" "mini_imagenet" "clrs25" "core50"
+for DATASET_NAME in      "cifar100" #"mini_imagenet" "clrs25" "core50"
   do
 
 
@@ -31,7 +31,7 @@ for DATASET_NAME in      "cifar100" "mini_imagenet" "clrs25" "core50"
   AUG_MAX=0.8
   AUG_MIN=0.7
 
-  FILE_NAME=$NAME_PREFIX"_adaptive_rar_RL.sh"
+  FILE_NAME=$NAME_PREFIX"adaptive_rar_RL.sh"
   source $FILE_NAME $GPU_ID $NUM_TASKS $DATASET_NAME $SEED $MEM_SIZE $MEM_ITER \
   $RAUG_N $RAUG_M $RAUG_TARGET $MEM_BATCH $RES_SIZE $MEM_MAX $STOP_RATIO \
   $LR_large $LR_small $ACC_MAX $ACC_MIN $AUG_NUM $AUG_MAX $AUG_MIN
