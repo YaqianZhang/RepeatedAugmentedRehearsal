@@ -1,6 +1,6 @@
 # Repeated Augmented Rehearsal (RAR) for online continual learning
 
-This is the code repository for Repeated Augmented Rehearsal.
+This is the official code repository for [Repeated Augmented Rehearsal (NeurIPS 2022)](https://arxiv.org/abs/2209.13917).
 
 ##
 
@@ -26,10 +26,9 @@ pip install -r requirements.txt
 ```
 
 ## Run commands
-### Repeated Augmented Rehearsal
 
 ### bash runs
-A test run of ER_RAR can be performed with the following command:
+A test run of Repeated Augmented Rehearsal(RAR) with experience replay can be performed with the following command:
 ```
 bash run_commands/runs/run_test_rar_er_cifar100.sh
 ```
@@ -56,12 +55,7 @@ The jupyter notebook [visualize_results.ipynb](visualize_results.ipynb) is used 
 
 ## Algorithms 
 
-### Repeated Augmented Rehearsal
-
-
 ### Baselines
-
-
 * LwF: Learning without forgetting (**ECCV, 2016**) [[Paper]](https://link.springer.com/chapter/10.1007/978-3-319-46493-0_37)
 * AGEM: Averaged Gradient Episodic Memory (**ICLR, 2019**) [[Paper]](https://openreview.net/forum?id=Hkf2_sC5FX)
 * ER: Experience Replay (**ICML Workshop, 2019**) [[Paper]](https://arxiv.org/abs/1902.10486)
