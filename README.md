@@ -83,7 +83,7 @@ The jupyter notebook [visualize_results.ipynb](visualize_results.ipynb) is used 
 
 
 ## Acknowledgments
-Our code is based on :
+Thanks for the great code base from:
 - [SCR/ASER](https://github.com/RaptorMai/online-continual-learning)
 - [Rehearsal Revealed](https://github.com/Mattdl/RehearsalRevealed)
 - [DER](https://github.com/aimagelab/mammoth)
