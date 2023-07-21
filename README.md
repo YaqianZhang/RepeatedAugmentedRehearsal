@@ -1,8 +1,21 @@
 # Repeated Augmented Rehearsal (RAR) for online continual learning
 
 This is the official code repository for [Repeated Augmented Rehearsal (NeurIPS 2022)](https://arxiv.org/abs/2209.13917).
+If you use any content of this repo for your work, please cite the following bib entry:
 
-##
+## Citation
+```
+@inproceedings{NEURIPS2022_5ebbbac6,
+ author = {Zhang, Yaqian and Pfahringer, Bernhard and Frank, Eibe and Bifet, Albert and Lim, Nick Jin Sean and Jia, Yunzhe},
+ booktitle = {Advances in Neural Information Processing Systems},
+ pages = {14771--14783},
+ title = {A simple but strong baseline for online continual learning: Repeated Augmented Rehearsal},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2022/file/5ebbbac62b968254093023f1c95015d3-Paper-Conference.pdf},
+ volume = {35},
+ year = {2022}
+}
+```
+
 
 ## Requirements
 ![](https://img.shields.io/badge/python-3.7-green.svg)
